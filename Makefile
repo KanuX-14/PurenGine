@@ -9,6 +9,6 @@ COBJS =
 SOURCES += src/render/draw.c
 
 all:
-	${CC} ${CFLAGS} ${SOURCES} ${INCLUDES} ${LIBRARIES} -o PML 
+	${CC} ${CFLAGS} ${SOURCES} ${INCLUDES} ${LIBRARIES} -o PMM 
 clean:
-	rm -v PML
+	rm -v PMM

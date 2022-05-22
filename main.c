@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 
     SDL_Init(SDL_INIT_VIDEO);
 
-    window = SDL_CreateWindow( "Pure Mod Loader", init_posX, init_posY, init_width, init_height, SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow( "Pure Mod Manager", init_posX, init_posY, init_width, init_height, SDL_WINDOW_RESIZABLE);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 

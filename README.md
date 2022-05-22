@@ -1,2 +1,2 @@
-# PureModLoader
-PML is a modification manager, written in pure C.
+# PureModManager
+PMM is a modification manager, written in pure C.

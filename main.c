@@ -1,40 +1,58 @@
-// Example program:
-// Using SDL2 to create an application window
-
 #include <stdio.h>
 #include "SDL2/SDL.h"
+#include "draw.h"
 
 int main(int argc, char* argv[]) {
 
-    SDL_Window *window;                    // Declare a pointer
+    SDL_Window *window = NULL;
+    SDL_Renderer *renderer = NULL;
+    SDL_Texture *bitmapTex = NULL;
+    SDL_Surface *bitmapSurface = NULL;
+    int init_posX = SDL_WINDOWPOS_UNDEFINED;
+    int init_posY = SDL_WINDOWPOS_UNDEFINED;
+    int init_width = 640;
+    int init_height = 480;
+    int i, x, y;
+    Uint32 keys;
+    SDL_bool running = SDL_TRUE;
+    SDL_bool isFlashbanged = SDL_FALSE;
 
-    SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+    SDL_Init(SDL_INIT_VIDEO);
 
-    // Create an application window with the following settings:
-    window = SDL_CreateWindow(
-        "Pure Mod Loader",                 // window title
-        SDL_WINDOWPOS_UNDEFINED,           // initial x position
-        SDL_WINDOWPOS_UNDEFINED,           // initial y position
-        640,                               // width, in pixels
-        480,                               // height, in pixels
-        SDL_WINDOW_OPENGL                  // flags - see below
-    );
+    window = SDL_CreateWindow( "Pure Mod Loader", init_posX, init_posY, init_width, init_height, SDL_WINDOW_RESIZABLE);
 
-    // Check that the window was successfully created
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
     if (window == NULL) {
-        // In the case that the window could not be made...
         printf("Could not create window: %s\n", SDL_GetError());
         return 1;
     }
 
-    // The window is open: could enter program loop here (see SDL_PollEvent())
+    // Process the launcher
 
-    SDL_Delay(3000);  // Pause execution for 3000 milliseconds, for example
+    while(running)
+    {
+        SDL_Event event;
 
-    // Close and destroy the window
+        // Listen to the X button
+
+        while(SDL_PollEvent(&event))
+        {
+            switch(event.type)
+            {
+                case SDL_QUIT:
+                    running = SDL_FALSE;
+                    break;
+            }
+        }
+
+        drawBackground(renderer, bitmapSurface, bitmapTex, isFlashbanged);
+    }
+
+    // Safely free the allocated memory
+
     SDL_DestroyWindow(window);
-
-    // Clean up
     SDL_Quit();
+
     return 0;
 }

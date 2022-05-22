@@ -1,8 +1,8 @@
 // Example program:
 // Using SDL2 to create an application window
 
-#include <SDL.h>
 #include <stdio.h>
+#include "SDL2/SDL.h"
 
 int main(int argc, char* argv[]) {
 
@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
 
     // Create an application window with the following settings:
     window = SDL_CreateWindow(
-        "An SDL2 window",                  // window title
+        "Pure Mod Loader",                 // window title
         SDL_WINDOWPOS_UNDEFINED,           // initial x position
         SDL_WINDOWPOS_UNDEFINED,           // initial y position
         640,                               // width, in pixels

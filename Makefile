@@ -7,6 +7,7 @@ SOURCES = main.c
 COBJS =
 
 SOURCES += src/render/draw.c
+SOURCES += src/input/keyboard.c
 
 all:
 	${CC} ${CFLAGS} ${SOURCES} ${INCLUDES} ${LIBRARIES} -o PMM 

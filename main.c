@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "SDL2/SDL.h"
 #include "draw.h"
+#include "keyboard.h"
 
 int main(int argc, char* argv[]) {
 
@@ -12,12 +13,13 @@ int main(int argc, char* argv[]) {
     int init_posY = SDL_WINDOWPOS_UNDEFINED;
     int init_width = 640;
     int init_height = 480;
-    int i, x, y;
+    int i, x, y, key, cursor;
     Uint32 keys;
     SDL_bool running = SDL_TRUE;
     SDL_bool isFlashbanged = SDL_FALSE;
 
     SDL_Init(SDL_INIT_VIDEO);
+    SDL_PumpEvents();
 
     window = SDL_CreateWindow( "Pure Mod Manager", init_posX, init_posY, init_width, init_height, SDL_WINDOW_RESIZABLE);
 
@@ -34,19 +36,36 @@ int main(int argc, char* argv[]) {
     {
         SDL_Event event;
 
+        keys = SDL_GetMouseState(&x, &y);
+
         // Listen to the X button
 
         while(SDL_PollEvent(&event))
         {
+            key = event.key.keysym.scancode;
+
             switch(event.type)
             {
                 case SDL_QUIT:
                     running = SDL_FALSE;
                     break;
+                case SDL_KEYDOWN:
+                    switch(key)
+                    {
+                        case SDL_SCANCODE_ESCAPE:
+                        case SDL_SCANCODE_TAB:
+                        case SDL_SCANCODE_LSHIFT:
+                            cursor = keyboardCursor(key);
+                            break;
+                        default:
+                            break;
+                    }
             }
         }
 
         drawBackground(renderer, bitmapSurface, bitmapTex, isFlashbanged);
+
+        SDL_Delay(1000/5); // Lock to 5 FPS for low consumption
     }
 
     // Safely free the allocated memory

@@ -6,6 +6,7 @@ extern int init_height;
 extern int windowX;
 extern int windowY;
 extern int isClicked;
+extern SDL_bool running;
 extern SDL_bool isFlashbanged;
 
 #endif

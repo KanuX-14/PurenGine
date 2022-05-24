@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "main.h"
 
 int drawProcess(SDL_Renderer *renderer)
@@ -27,6 +28,9 @@ int drawBackground(SDL_Renderer *renderer)
     SDL_FreeSurface(backgroundSurface);
     SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
 
+    if(!running)
+        SDL_DestroyTexture(backgroundTexture);
+
     return 0;
 }
 
@@ -35,17 +39,28 @@ int drawUI(SDL_Renderer *renderer)
     int i, mouseX, mouseY;
     char buttonPath[128] = "src/images/button/";
     char fontPath[64] = "src/fonts/";
+    SDL_Color fontColour = {0, 0, 0};
     SDL_GetMouseState(&mouseX, &mouseY);
 
     if(isFlashbanged)
+    {
         strncat(buttonPath, "flashbang/", 11);
+        fontColour.r = 0;
+        fontColour.g = 0;
+        fontColour.b = 0;
+    }
     else
+    {
         strncat(buttonPath, "dark/", 6);
+        fontColour.r = 255;
+        fontColour.g = 255;
+        fontColour.b = 255;
+    }
     
-    SDL_Texture *buttonTexture;
-    SDL_Surface *buttonSurface;
-    SDL_Texture *fontTexture;
-    SDL_Surface *fontSurface;
+    SDL_Texture *lightButtonTexture = NULL;
+    SDL_Surface *lightButtonSurface = NULL;
+    TTF_Font *font = TTF_OpenFont("/usr/share/fonts/cantarell/Cantarell-VF.otf", 256);
+    SDL_Texture *fontTexture = NULL;
 
     // Process light button
 
@@ -55,22 +70,26 @@ int drawUI(SDL_Renderer *renderer)
     int lightButtonPosY = windowY - (windowY-10);
     SDL_Rect lightButtonRect = {lightButtonPosX, lightButtonPosY, lightButtonSizeX, lightButtonSizeY};
 
+    // Process font
+
+    SDL_Surface *fontSurface = NULL;
+    SDL_Rect fontRect = {windowX/2, windowY-20, 256, 16};
+
+    fontSurface = TTF_RenderText_Solid(font, "PureModManager v0.0.0 testing", fontColour);
+
     // Process mouse interaction
 
-    if(mouseX > lightButtonPosX && mouseX < lightButtonPosX+lightButtonSizeX)
+    if(mouseX > lightButtonPosX && mouseX < lightButtonPosX+lightButtonSizeX && mouseY > lightButtonPosY && mouseY < lightButtonSizeY+10)
     {
-        if(mouseY > lightButtonPosY && mouseY < lightButtonSizeY)
-        {
-            strncat(buttonPath, "idle-hover.bmp", 15);
+        strncat(buttonPath, "idle-hover.bmp", 15);
 
-            if(isClicked)
-            {
-                if(isFlashbanged)
-                    isFlashbanged = SDL_FALSE;
-                else
-                    isFlashbanged = SDL_TRUE;
-                strncat(buttonPath, "idle-click.bmp", 15);
-            }
+        if(isClicked)
+        {
+            if(isFlashbanged)
+                isFlashbanged = SDL_FALSE;
+            else
+                isFlashbanged = SDL_TRUE;
+            strncat(buttonPath, "idle-click.bmp", 15);
         }
     }
     else
@@ -78,18 +97,25 @@ int drawUI(SDL_Renderer *renderer)
 
     // Process textures
 
-    buttonSurface = SDL_LoadBMP(buttonPath);
-    buttonTexture = SDL_CreateTextureFromSurface(renderer, buttonSurface);
+    lightButtonSurface = SDL_LoadBMP(buttonPath);
+    lightButtonTexture = SDL_CreateTextureFromSurface(renderer, lightButtonSurface);
 
-    fontSurface = SDL_LoadBMP("src/images/title/title.bmp");
-    fontTexture = SDL_CreateTextureFromSurface(renderer, buttonSurface);
+    fontTexture = SDL_CreateTextureFromSurface(renderer, fontSurface);
 
-    SDL_FreeSurface(buttonSurface);
+    SDL_FreeSurface(lightButtonSurface);
     SDL_FreeSurface(fontSurface);
 
     // Deploy the modules
 
-    SDL_RenderCopy(renderer, buttonTexture, NULL, &lightButtonRect);
+    SDL_RenderCopy(renderer, lightButtonTexture, NULL, &lightButtonRect);
+    SDL_RenderCopy(renderer, fontTexture, NULL, &fontRect);
+
+    if(!running)
+    {
+        TTF_Quit();
+        SDL_DestroyTexture(lightButtonTexture);
+        SDL_DestroyTexture(fontTexture);
+    }
 
     return 0;
 }

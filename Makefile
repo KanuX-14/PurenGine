@@ -2,8 +2,8 @@ CC = gcc
 CFLAGS = --std=c11 -g -Wall
 INCLUDES = -I headers \
 	-I vendor/SDL/include \
-	-I vendor/SDL_image
-LIBRARIES = -lSDL2 -lSDL2main
+	-I vendor/SDL_ttf
+LIBRARIES = -lSDL2 -lSDL2main -lSDL2_ttf
 SOURCES = main.c
 COBJS =
 

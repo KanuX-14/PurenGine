@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "draw.h"
 #include "keyboard.h"
 #include "mouse.h"
@@ -9,26 +10,34 @@ int init_height = 480;
 int windowX;
 int windowY;
 int isClicked = 0;
+SDL_bool running = SDL_TRUE;
 SDL_bool isFlashbanged = SDL_FALSE;
 
 int main(int argc, char* argv[])
 {
     SDL_Window *window;
     SDL_Renderer *renderer;
-    SDL_bool running = SDL_TRUE;
     int init_posX = SDL_WINDOWPOS_UNDEFINED;
     int init_posY = SDL_WINDOWPOS_UNDEFINED;
     int i, key, cursor;
 
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     SDL_PumpEvents();
 
     window = SDL_CreateWindow("Pure Mod Manager", init_posX, init_posY, init_width, init_height, SDL_WINDOW_RESIZABLE);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    if (window == NULL) {
-        printf("Could not create window: %s\n", SDL_GetError());
+    if(window == NULL)
+    {
+        printf("[DBG]: Could not create window: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    if(renderer == NULL)
+    {
+        printf("[DBG]: Could not create renderer: %s\n", SDL_GetError());
         return 1;
     }
 

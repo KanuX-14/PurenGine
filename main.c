@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "tools.h"
 #include "draw.h"
 #include "keyboard.h"
 #include "mouse.h"
@@ -19,7 +20,7 @@ int main(int argc, char* argv[])
     SDL_Renderer *renderer;
     int init_posX = SDL_WINDOWPOS_UNDEFINED;
     int init_posY = SDL_WINDOWPOS_UNDEFINED;
-    int i, key, cursor;
+    int key, cursor;
 
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
@@ -31,13 +32,15 @@ int main(int argc, char* argv[])
 
     if(window == NULL)
     {
-        printf("[DBG]: Could not create window: %s\n", SDL_GetError());
+        debug("Could not create window.\n", 2);
+        SDL_GetError();
         return 1;
     }
 
     if(renderer == NULL)
     {
-        printf("[DBG]: Could not create renderer: %s\n", SDL_GetError());
+        debug("Could not create renderer.\n", 2);
+        SDL_GetError();
         return 1;
     }
 
@@ -98,7 +101,7 @@ int main(int argc, char* argv[])
 
         drawProcess(renderer);
 
-        SDL_Delay(1000/60); // Lock to 60 FPS for low consumption
+        SDL_Delay(1000/15); // Lock to 15 FPS for low consumption
     }
 
     // Safely free the allocated memory

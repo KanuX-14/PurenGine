@@ -1,27 +1,29 @@
 #include <stdio.h>
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "draw.h"
 #include "keyboard.h"
+#include "mouse.h"
 
-int main(int argc, char* argv[]) {
+int init_width = 640;
+int init_height = 480;
+int windowX;
+int windowY;
+int isClicked = 0;
+SDL_bool isFlashbanged = SDL_FALSE;
 
-    SDL_Window *window = NULL;
-    SDL_Renderer *renderer = NULL;
-    SDL_Texture *bitmapTex = NULL;
-    SDL_Surface *bitmapSurface = NULL;
+int main(int argc, char* argv[])
+{
+    SDL_Window *window;
+    SDL_Renderer *renderer;
+    SDL_bool running = SDL_TRUE;
     int init_posX = SDL_WINDOWPOS_UNDEFINED;
     int init_posY = SDL_WINDOWPOS_UNDEFINED;
-    int init_width = 640;
-    int init_height = 480;
-    int i, x, y, key, cursor;
-    Uint32 keys;
-    SDL_bool running = SDL_TRUE;
-    SDL_bool isFlashbanged = SDL_FALSE;
+    int i, key, cursor;
 
     SDL_Init(SDL_INIT_VIDEO);
     SDL_PumpEvents();
 
-    window = SDL_CreateWindow( "Pure Mod Manager", init_posX, init_posY, init_width, init_height, SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("Pure Mod Manager", init_posX, init_posY, init_width, init_height, SDL_WINDOW_RESIZABLE);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
@@ -30,13 +32,17 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    SDL_GetWindowSize(window, &windowX, &windowY);
+
     // Process the launcher
 
     while(running)
     {
         SDL_Event event;
 
-        keys = SDL_GetMouseState(&x, &y);
+        // Restart variables
+
+        isClicked = 0;
 
         // Listen to the X button
 
@@ -60,16 +66,35 @@ int main(int argc, char* argv[]) {
                         default:
                             break;
                     }
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    isClicked = 1;
+                    break;
+                case SDL_WINDOWEVENT:
+                    switch(event.window.event)
+                    {
+                        case SDL_WINDOWEVENT_RESIZED:
+                            {
+                                windowX = event.window.data1;
+                                windowY = event.window.data2;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                default:
+                    break;
             }
         }
 
-        drawBackground(renderer, bitmapSurface, bitmapTex, isFlashbanged);
+        drawProcess(renderer);
 
-        SDL_Delay(1000/5); // Lock to 5 FPS for low consumption
+        SDL_Delay(1000/60); // Lock to 60 FPS for low consumption
     }
 
     // Safely free the allocated memory
 
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 

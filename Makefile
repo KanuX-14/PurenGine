@@ -19,6 +19,7 @@ all:
 install:
 	mkdir -pv ${PROGRAM_FOLDER}
 	cp -rv src/images ${PROGRAM_FOLDER}
+	cp -v GAME_LIST ${PROGRAM_FOLDER}
 	if [ ${CURRENT_USER} == "root" ]; then \
 		mv -v PMM /usr/local/bin; \
 	fi

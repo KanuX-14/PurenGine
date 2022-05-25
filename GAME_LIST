@@ -1,0 +1,33 @@
+;===============================================================================;
+; Simple File Reader developed by KanuX-14                                      ;
+;                                                                               ;
+; In order to list a game is very simple.                                       ;
+; You can comment a file using the semi-colon.                                  ;
+; Lines starting with a semi-colon will be skipped.                             ;
+;                                                                               ;
+;===============================================================================;
+;                                                                               ;
+; How to submit a game list?                                                    ;
+;                                                                               ;
+; It is necessary to give just the value. Less scripting means less resources.  ;
+; And less resources means less memory consumption.                             ;
+;                                                                               ;
+; {                                                                             ;
+; NAME                                                                          ;
+; PATH                                                                          ;
+; RUNTIME                                                                       ;
+; }                                                                             ;
+;                                                                               ;
+; The bracket symbol start and end the given values.                            ;
+; Remember to use a bracket symbol just 2 times.                                ;
+;===============================================================================;
+;
+;
+;
+{
+Minecraft
+.minecraft
+Java
+}
+;
+; 

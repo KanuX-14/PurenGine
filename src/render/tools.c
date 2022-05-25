@@ -4,16 +4,16 @@
 
 int debug(char message[], int warningLevel)
 {
-    char debugTag[5] = "[DBG]";
-    char debugColour[16];
+    char debugTag[8] = "[DBG]";
+    char debugColour[32]= "";
 
     switch(warningLevel)
     {
         case 1:
-            strncat(debugColour, "\e[33m", 9);
+            strncat(debugColour, "\e[33m", 16);
             break;
         case 2:
-            strncat(debugColour, "\e[31m", 9);
+            strncat(debugColour, "\e[31m", 16);
             break;
         default:
             break;
@@ -39,6 +39,22 @@ int removeChar(char string[], int cursor, int count)
     {
         strcpy(&string[count-i],"");
     }
+
+    return 0;
+}
+
+// Add the texture path to a object.
+int appendTexturePath(char object[], char texture[], char texturePath[])
+{
+    char buffer[256];
+    int bufferLenght, textureLenght, texturePathLenght;
+
+    textureLenght = strlen(texture);
+    texturePathLenght = strlen(texturePath);
+    strncpy(buffer, texturePath, textureLenght+texturePathLenght);
+
+    bufferLenght = strlen(buffer);
+    snprintf(object, bufferLenght+textureLenght+1, "%s%s", buffer, texture);
 
     return 0;
 }

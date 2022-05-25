@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     SDL_Renderer *renderer;
     int init_posX = SDL_WINDOWPOS_UNDEFINED;
     int init_posY = SDL_WINDOWPOS_UNDEFINED;
-    int key, cursor;
+    //int key, cursor;
 
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
         while(SDL_PollEvent(&event))
         {
-            key = event.key.keysym.scancode;
+            //key = event.key.keysym.scancode;
 
             switch(event.type)
             {
@@ -68,16 +68,16 @@ int main(int argc, char* argv[])
                     running = SDL_FALSE;
                     break;
                 case SDL_KEYDOWN:
-                    switch(key)
-                    {
-                        case SDL_SCANCODE_ESCAPE:
-                        case SDL_SCANCODE_TAB:
-                        case SDL_SCANCODE_LSHIFT:
-                            cursor = keyboardCursor(key);
-                            break;
-                        default:
-                            break;
-                    }
+                    // switch(key)
+                    // {
+                    //     case SDL_SCANCODE_ESCAPE:
+                    //     case SDL_SCANCODE_TAB:
+                    //     case SDL_SCANCODE_LSHIFT:
+                    //         cursor = keyboardCursor(key);
+                    //         break;
+                    //     default:
+                    //         break;
+                    // }
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     isClicked = 1;

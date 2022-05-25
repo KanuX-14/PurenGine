@@ -17,7 +17,7 @@ CURRENT_USER = `whoami`
 all:
 	${CC} ${CFLAGS} ${SOURCES} ${INCLUDES} ${LIBRARIES} -o PMM
 install:
-	mkdir -v ${PROGRAM_FOLDER}
+	mkdir -pv ${PROGRAM_FOLDER}
 	cp -rv src/images ${PROGRAM_FOLDER}
 	if [ ${CURRENT_USER} == "root" ]; then \
 		mv -v PMM /usr/local/bin; \

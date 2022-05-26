@@ -530,7 +530,7 @@ int setProgramList(SDL_Renderer *renderer,
         snprintf(lineCount, stringSize(drawBuffer), "%s", drawBuffer);
     pclose(pipe);
     clearString(drawBuffer);
-    count = stoi(lineCount);
+    count = atoi(lineCount);
 
     for(i=0;i<count;i++)
     {

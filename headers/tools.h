@@ -2,7 +2,6 @@
 #define TOOLS_H
 
 int debug(char message[], int warningLevel);
-int stoi(char number[]);
 int removeChar(char string[], int cursor, int count);
 int stringSize(char string[]);
 int clearString(char string[]);

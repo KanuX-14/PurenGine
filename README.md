@@ -1,5 +1,5 @@
-# PureModManager
-PMM is a modification manager, written in pure C. PureModManager use the SDL2 engine to render the application.
+# PurenGine
+PG is a UI engine, written in pure C. PurenGine use the SDL2 engine to render the application.
 
 ## Dependencies
 
@@ -15,7 +15,7 @@ sudo pacman -S --needed git make sdl2 sdl2_ttf
 
 - Fedora
 ```bash
-sudo yum install git make SDL2 SDL2-devel SDL2_ttf SDL2_ttf-devel
+sudo dnf install git make SDL2 SDL2-devel SDL2_ttf SDL2_ttf-devel
 ```
 
 - Other distributions
@@ -33,14 +33,14 @@ sudo make install
 
 - Install without root:
 ```bash
-git clone --recursive https://github.com/KanuX-14/PureModManager.git \
-cd PureModManager \
+git clone --recursive https://github.com/KanuX-14/PurenGine.git \
+cd PurenGine \
 make && make install
 ```
-- Install with root (leave PMM in /usr/local/bin):
+- Install with root (leave PG in /usr/local/bin):
 ```bash
-git clone --recursive https://github.com/KanuX-14/PureModManager.git \
-cd PureModManager \
+git clone --recursive https://github.com/KanuX-14/PurenGine.git \
+cd PurenGine \
 make && sudo make install
 ```
 
